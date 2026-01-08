@@ -28,7 +28,21 @@
     </span>
   </h2>
 
-  <%= image_tag "12gatu.png", class: "w-96 h-auto mx-auto block border-4 border-orange-100" %>
+<div class="mx-auto mb-8 w-96">
+  <%= month_calendar events: @events do |date, events| %>
+    <div class="flex flex-col h-full">
+      <span class="text-sm font-bold text-orange-700">
+        <%= date.day %>
+      </span>
+
+      <% events.each do |event| %>
+        <span class="mt-1 rounded bg-orange-200 px-1 text-xs">
+          <%= event.title %>
+        </span>
+      <% end %>
+    </div>
+  <% end %>
+</div>
 
   <div class="mb-4 text-center">
     <a>注）営業時間は10時〜16時になります。</a>
