@@ -1,1 +1,36 @@
 @import "tailwindcss";
+
+@layer components {
+  .simple-calendar .calendar-heading {
+    @apply mb-4 text-center;
+  }
+
+  .simple-calendar .calendar-title {
+    @apply text-xl font-bold text-orange-800;
+  }
+
+  .simple-calendar nav a {
+    @apply mx-2 px-3 py-1 text-sm font-bold;
+  }
+
+  .simple-calendar table {
+    @apply w-full border-collapse bg-orange-50;
+  }
+
+  .simple-calendar th {
+    @apply border border-orange-200 bg-orange-100 py-2 text-sm font-bold text-orange-800;
+  }
+
+  .simple-calendar td {
+    @apply border border-orange-200 h-10 p-1 align-top;
+  }
+
+  .simple-calendar .today {
+    @apply bg-orange-200;
+  }
+
+  .simple-calendar .wday-0,
+  .simple-calendar .wday-6 {
+    @apply bg-orange-100;
+  }
+}

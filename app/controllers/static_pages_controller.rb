@@ -1,3 +1,5 @@
 class StaticPagesController < ApplicationController
-  def top; end
+  def top
+    @events = []  # ← 将来 Event.all に置き換える
+  end
 end
