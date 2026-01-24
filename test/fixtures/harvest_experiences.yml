@@ -2,10 +2,6 @@
 
 one:
   title: MyString
-  event_datetime: 2025-11-30 00:31:23
-  capacity: 1
 
 two:
   title: MyString
-  event_datetime: 2025-11-30 00:31:23
-  capacity: 1
