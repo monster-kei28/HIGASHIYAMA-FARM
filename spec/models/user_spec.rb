@@ -4,12 +4,7 @@ RSpec.describe User, type: :model do
   describe 'validations' do
     subject { user }
 
-    let(:user) do
-      User.new(
-        name: '山田太郎',
-        phone_number: '09012345678'
-      )
-    end
+    let(:user) { build(:user) }
 
     context '有効な場合' do
       it 'name と phone_number があれば有効' do
@@ -35,10 +30,7 @@ RSpec.describe User, type: :model do
 
     context 'phone_number が重複している場合' do
       it '無効になる' do
-        User.create!(
-          name: '先に作ったユーザー',
-          phone_number: '09012345678'
-        )
+        create(:user, phone_number: user.phone_number)
 
         expect(user).to be_invalid
         expect(user.errors[:phone_number]).to include('has already been taken')
@@ -70,23 +62,12 @@ RSpec.describe User, type: :model do
     end
 
     it 'user が削除されたら reservations も削除される' do
-      user = User.create!(
-        name: '削除テスト',
-        phone_number: '08012345678'
-      )
+      user = create(:user)
+      create(:reservation, user: user)
 
-      harvest_experience = HarvestExperience.create!(
-        title: 'テスト収穫体験',
-      )
-
-      reservation = Reservation.create!(
-        user: user,
-        harvest_experience: harvest_experience,
-        number_of_people: 2,
-        reserved_at: Time.current
-      )
-
-      expect { user.destroy }.to change { Reservation.count }.by(-1)
+      expect {
+        user.destroy
+      }.to change { Reservation.count }.by(-1)
     end
   end
 end

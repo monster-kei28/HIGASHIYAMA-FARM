@@ -4,27 +4,7 @@ RSpec.describe Reservation, type: :model do
   describe 'validations' do
     subject { reservation }
 
-    let(:user) do
-      User.create!(
-        name: '山田太郎',
-        phone_number: '09012345678'
-      )
-    end
-
-    let(:harvest_experience) do
-      HarvestExperience.create!(
-        title: 'テスト収穫体験',
-      )
-    end
-
-    let(:reservation) do
-      Reservation.new(
-        user: user,
-        harvest_experience: harvest_experience,
-        number_of_people: 2,
-        reserved_at: Time.current
-      )
-    end
+    let(:reservation) { build(:reservation) }
 
     context '有効な場合' do
       it 'すべての必須項目があれば有効' do

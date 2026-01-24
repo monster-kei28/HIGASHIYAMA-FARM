@@ -2,19 +2,15 @@ require 'rails_helper'
 
 RSpec.describe HarvestExperience, type: :model do
   describe 'validations' do
-    context '有効な場合' do
-      it 'title があれば有効である' do
-        harvest_experience = HarvestExperience.new(title: 'テスト収穫体験')
-        expect(harvest_experience).to be_valid
-      end
+    it 'title があれば有効である' do
+      harvest_experience = build(:harvest_experience)
+      expect(harvest_experience).to be_valid
     end
 
-    context '無効な場合' do
-      it 'title がない場合は無効である' do
-        harvest_experience = HarvestExperience.new(title: nil)
-        expect(harvest_experience).to be_invalid
-        expect(harvest_experience.errors[:title]).to include("can't be blank")
-      end
+    it 'title がない場合は無効である' do
+      harvest_experience = build(:harvest_experience, title: nil)
+      expect(harvest_experience).to be_invalid
+      expect(harvest_experience.errors[:title]).to include("can't be blank")
     end
   end
 
@@ -28,21 +24,8 @@ RSpec.describe HarvestExperience, type: :model do
 
   describe 'dependent destroy' do
     it 'harvest_experience が削除されたら reservations も削除される' do
-      user = User.create!(
-        name: '山田太郎',
-        phone_number: '09012345678'
-      )
-
-      harvest_experience = HarvestExperience.create!(
-        title: 'テスト収穫体験'
-      )
-
-      Reservation.create!(
-        user: user,
-        harvest_experience: harvest_experience,
-        number_of_people: 2,
-        reserved_at: Time.current
-      )
+      harvest_experience = create(:harvest_experience)
+      create(:reservation, harvest_experience: harvest_experience)
 
       expect {
         harvest_experience.destroy
