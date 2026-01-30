@@ -1,0 +1,4 @@
+/* CI・テスト環境での asset エラー回避用ダミーファイル
+ *= require_tree .
+ *= require_self
+ */
