@@ -3,9 +3,9 @@
     <p class="text-sm">&copy; 2026 VeggiePick</p>
 
     <nav class="flex gap-4 text-sm">
-      <a href="#" class="hover:underline">利用規約</a>
-      <a href="#" class="hover:underline">プライバシーポリシー</a>
-      <a href="#" class="hover:underline">お問い合わせ</a>
+      <%= link_to '利用規約', terms_path, class: 'hover:underline' %>
+      <%= link_to 'プライバシーポリシー', privacy_path, class: 'hover:underline' %>
+      <%= link_to 'お問い合わせ', contact_path, class: 'hover:underline' %>
     </nav>
   </div>
 </footer>
