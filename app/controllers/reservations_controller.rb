@@ -4,21 +4,37 @@ class ReservationsController < ApplicationController
     @harvest_experiences = HarvestExperience.all
   end
 
-  def create
-    @harvest_experiences = HarvestExperience.all
+def create
+  @harvest_experiences = HarvestExperience.all
 
-    @user = User.find_or_initialize_by(phone_number: params[:reservation][:phone_number])
-    @user.name = params[:reservation][:name]
-
-    @reservation = Reservation.new(reservation_params)
-    @reservation.user = @user
-
-    if @user.save && @reservation.save
-      redirect_to root_path, notice: "予約が完了しました"
+  @user =
+    if logged_in?
+      current_user.tap do |u|
+        u.name = params[:reservation][:name]
+        u.phone_number = params[:reservation][:phone_number]
+      end
     else
-      render :new, status: :unprocessable_entity
+      User.find_or_initialize_by(phone_number: params[:reservation][:phone_number]).tap do |u|
+        u.name = params[:reservation][:name]
+      end
     end
+
+  unless @user.phone_number.present?
+    @user.errors.add(:phone_number, "を入力してください")
+    @reservation = Reservation.new(reservation_params)
+    render :new, status: :unprocessable_entity
+    return
   end
+
+  @reservation = Reservation.new(reservation_params)
+  @reservation.user = @user
+
+  if @user.save && @reservation.save
+    redirect_to root_path, notice: "予約が完了しました"
+  else
+    render :new, status: :unprocessable_entity
+  end
+end
 
   def search
   end
