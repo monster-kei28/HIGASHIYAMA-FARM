@@ -46,7 +46,7 @@ RSpec.describe "Reservations", type: :request do
           }
         }.not_to change(Reservation, :count)
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
 
       context "同じ電話番号のユーザーが既に存在する場合" do
@@ -103,7 +103,7 @@ RSpec.describe "Reservations", type: :request do
           phone_number: "09000000000"
         }
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
   end

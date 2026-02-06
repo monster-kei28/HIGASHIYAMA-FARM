@@ -1,16 +1,5 @@
 <%= form_with model: @reservation, local: true, class: "max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mt-10 mb-20" do |f| %>
 
-  <% if @user&.errors&.any? %>
-    <div class="mb-4 p-4 bg-red-100 border border-red-400 rounded text-red-700">
-      <h3 class="font-bold">ユーザー情報にエラーがあります</h3>
-      <ul class="list-disc ml-5">
-        <% @user.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <% if @reservation.errors.any? %>
     <div class="mb-4 p-4 bg-red-100 border border-red-400 rounded text-red-700">
       <h3 class="font-bold">入力内容にエラーがあります</h3>
@@ -22,31 +11,41 @@
     </div>
   <% end %>
 
-  <h2 class="text-center mt-8 mb-8">
+  <h2 class="text-center my-8">
     <span class="inline-block bg-orange-100 px-6 py-2 text-xl font-bold">
       予約フォーム
     </span>
   </h2>
 
-<div class="mx-auto mb-8 w-96">
-  <%= month_calendar events: @events do |date, events| %>
-    <div class="flex flex-col h-full">
-      <span class="text-sm font-bold text-orange-700">
-        <%= date.day %>
-      </span>
+  <div class="mx-auto mb-8 w-96">
+    <%= month_calendar events: @events do |date, events| %>
+      <div class="flex flex-col h-full">
+        <span class="text-sm font-bold text-orange-700"><%= date.day %></span>
 
-      <% events.each do |event| %>
-        <span class="mt-1 rounded bg-orange-200 px-1 text-xs">
-          <%= event.title %>
-        </span>
-      <% end %>
-    </div>
-  <% end %>
+        <% events.each do |event| %>
+          <span class="mt-1 rounded bg-orange-200 px-1 text-xs">
+            <%= event.title %>
+          </span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <p class="mb-4 text-center">
+    注）営業時間は10時〜16時になります。
+  </p>
+
+<% end %>
+
+<div class="text-center mt-4">
+  <%= button_to "LINEでログインして予約する",
+                "/auth/line",
+                method: :post,
+                data: { turbo: false },
+                class: "bg-green-500 text-white px-4 py-2 rounded" %>
 </div>
 
-  <div class="mb-4 text-center">
-    <a>注）営業時間は10時〜16時になります。</a>
-  </div>
+<%= form_with model: @reservation, local: true, class: "max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mt-10 mb-20" do |f| %>
 
   <div class="mb-4">
     <%= f.label :name, "名前", class: "block text-gray-700 font-medium mb-2" %>
@@ -81,3 +80,12 @@
     <%= f.submit "予約する", class: "bg-orange-100 hover:bg-orange-400 font-bold py-2 px-4 rounded block mx-auto mb-50 border-2 border-orange-200" %>
   </div>
 <% end %>
+
+
+  <div class="text-center mt-4">
+    <%= button_to "LINEでログインして予約する",
+                  "/auth/line",
+                  method: :post,
+                  data: { turbo: false },
+                  class: "bg-green-500 text-white px-4 py-2 rounded" %>
+  </div>

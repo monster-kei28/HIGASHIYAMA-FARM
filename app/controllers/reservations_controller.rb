@@ -7,8 +7,17 @@ class ReservationsController < ApplicationController
   def create
     @harvest_experiences = HarvestExperience.all
 
-    @user = User.find_or_initialize_by(phone_number: params[:reservation][:phone_number])
-    @user.name = params[:reservation][:name]
+    @user =
+      if logged_in?
+        current_user.tap do |u|
+          u.name = params[:reservation][:name]
+          u.phone_number = params[:reservation][:phone_number]
+        end
+      else
+        User.find_or_initialize_by(phone_number: params[:reservation][:phone_number]).tap do |u|
+          u.name = params[:reservation][:name]
+        end
+      end
 
     @reservation = Reservation.new(reservation_params)
     @reservation.user = @user
@@ -43,7 +52,6 @@ class ReservationsController < ApplicationController
   def destroy
     @reservation = Reservation.find(params[:id])
     @reservation.destroy
-
     redirect_to root_path, alert: "予約を取り消しました"
   end
 
