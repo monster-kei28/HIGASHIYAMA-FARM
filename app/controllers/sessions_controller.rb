@@ -10,6 +10,7 @@ class SessionsController < ApplicationController
     )
 
     session[:user_id] = user.id
+    flash[:notice] = "LINEでログインしました"
     redirect_to(session.delete(:return_to) || root_path)
   end
 end
