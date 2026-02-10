@@ -1,7 +1,7 @@
-<%= form_with model: @reservation, local: true, class: "max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mt-10 mb-20" do |f| %>
+<div class="max-w-2xl mx-auto px-4 py-10 space-y-10">
 
   <% if @reservation.errors.any? %>
-    <div class="mb-4 p-4 bg-red-100 border border-red-400 rounded text-red-700">
+    <div class="p-4 bg-red-100 border border-red-400 rounded text-red-700">
       <h3 class="font-bold">入力内容にエラーがあります</h3>
       <ul class="list-disc ml-5">
         <% @reservation.errors.full_messages.each do |msg| %>
@@ -11,81 +11,98 @@
     </div>
   <% end %>
 
-  <h2 class="text-center my-8">
+  <h2 class="text-center">
     <span class="inline-block bg-orange-100 px-6 py-2 text-xl font-bold">
       予約フォーム
     </span>
   </h2>
 
-  <div class="mx-auto mb-8 w-96">
-    <%= month_calendar events: @events do |date, events| %>
-      <div class="flex flex-col h-full">
-        <span class="text-sm font-bold text-orange-700"><%= date.day %></span>
+  <!-- カレンダー -->
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <div class="mx-auto w-96">
+      <%= month_calendar events: @events do |date, events| %>
+        <div class="flex flex-col h-full">
+          <span class="text-sm font-bold text-orange-700"><%= date.day %></span>
 
-        <% events.each do |event| %>
-          <span class="mt-1 rounded bg-orange-200 px-1 text-xs">
-            <%= event.title %>
-          </span>
-        <% end %>
+          <% events.each do |event| %>
+            <span class="mt-1 rounded bg-orange-200 px-1 text-xs">
+              <%= event.title %>
+            </span>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <p class="mt-4 text-center text-sm text-gray-600">
+      ※営業時間は10:00〜16:00です
+    </p>
+  </div>
+
+  <!-- LINEログイン -->
+  <div class="bg-white p-6 rounded-lg shadow-md text-center">
+    <h3 class="text-lg font-bold mb-2">LINEログイン（任意）</h3>
+
+    <% if logged_in? %>
+      <div class="p-4 bg-green-50 border border-green-200 rounded">
+        <p class="font-bold text-green-800">✅ LINEでログイン済みです</p>
+        <p class="text-sm text-green-700 mt-1">予約完了通知を受け取れます</p>
       </div>
+
+      <!-- 今はlogoutルートが無いので、いったんボタンは無しでもOK -->
+      <!-- 後でログアウトを作ったらここにボタンを追加 -->
+    <% else %>
+      <%= button_to "LINEでログインして予約する（任意）",
+                    "/auth/line",
+                    method: :post,
+                    data: { turbo: false },
+                    class: "bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded w-full" %>
+
+      <p class="mt-3 text-sm text-gray-600">
+        ※予約完了通知を受けたい方はLINEでログインしてください
+      </p>
+
+      <p class="mt-2 text-xs text-gray-500">
+        ※ログインしなくても予約できます
+      </p>
     <% end %>
   </div>
 
-  <p class="mb-4 text-center">
-    注）営業時間は10時〜16時になります。
-  </p>
+  <!-- 入力フォーム -->
+  <%= form_with model: @reservation, local: true, class: "bg-white p-6 rounded-lg shadow-md" do |f| %>
 
-<% end %>
+    <div class="mb-4">
+      <%= f.label :name, "名前", class: "block text-gray-700 font-medium mb-2" %>
+      <%= f.text_field :name, class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300" %>
+    </div>
 
-<div class="text-center mt-4">
-  <%= button_to "LINEでログインして予約する",
-                "/auth/line",
-                method: :post,
-                data: { turbo: false },
-                class: "bg-green-500 text-white px-4 py-2 rounded" %>
+    <div class="mb-4">
+      <%= f.label :phone_number, "電話番号", class: "block text-gray-700 font-medium mb-2" %>
+      <%= f.telephone_field :phone_number, class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :harvest_experience_id, "収穫体験を選択", class: "block text-gray-700 font-medium mb-2" %>
+      <%= f.collection_select :harvest_experience_id,
+          @harvest_experiences,
+          :id, :title,
+          { prompt: "選択してください" },
+          { class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300" } %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :number_of_people, "人数", class: "block text-gray-700 font-medium mb-2" %>
+      <%= f.number_field :number_of_people, class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300" %>
+    </div>
+
+    <div class="mb-6">
+      <%= f.label :reserved_at, "希望日時", class: "block text-gray-700 font-medium mb-2" %>
+      <%= f.datetime_local_field :reserved_at, class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300" %>
+    </div>
+
+    <div class="text-center">
+      <%= f.submit "予約する", class: "bg-orange-100 hover:bg-orange-400 font-bold py-2 px-6 rounded border-2 border-orange-200" %>
+    </div>
+
+  <% end %>
+
 </div>
-
-<%= form_with model: @reservation, local: true, class: "max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mt-10 mb-20" do |f| %>
-
-  <div class="mb-4">
-    <%= f.label :name, "名前", class: "block text-gray-700 font-medium mb-2" %>
-    <%= f.text_field :name, class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300" %>
-  </div>
-
-  <div class="mb-4">
-    <%= f.label :phone_number, "電話番号", class: "block text-gray-700 font-medium mb-2" %>
-    <%= f.telephone_field :phone_number, class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300" %>
-  </div>
-
-  <div class="mb-4">
-    <%= f.label :harvest_experience_id, "収穫体験を選択", class: "block text-gray-700 font-medium mb-2" %>
-    <%= f.collection_select :harvest_experience_id, 
-        @harvest_experiences,
-        :id, :title,
-        { prompt: "選択してください" }, 
-        { class: "block text-gray-700 w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300" } %>
-  </div>
-
-  <div class="mb-4">
-    <%= f.label :number_of_people, "人数", class: "block text-gray-700 font-medium mb-2" %>
-    <%= f.number_field :number_of_people, class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300" %>
-  </div>
-
-  <div class="mb-4">
-    <%= f.label :reserved_at, "希望日時", class: "block text-gray-700 font-medium mb-2" %>
-    <%= f.datetime_local_field :reserved_at, class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300" %>
-  </div>
-
-  <div class="text-center">
-    <%= f.submit "予約する", class: "bg-orange-100 hover:bg-orange-400 font-bold py-2 px-4 rounded block mx-auto mb-50 border-2 border-orange-200" %>
-  </div>
-<% end %>
-
-
-  <div class="text-center mt-4">
-    <%= button_to "LINEでログインして予約する",
-                  "/auth/line",
-                  method: :post,
-                  data: { turbo: false },
-                  class: "bg-green-500 text-white px-4 py-2 rounded" %>
-  </div>
