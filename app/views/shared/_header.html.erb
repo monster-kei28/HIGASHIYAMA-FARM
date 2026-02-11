@@ -1,5 +1,15 @@
-<header class="w-full bg-green-600 text-white py-4">
-  <div class="container mx-auto flex items-center justify-center px-4">
-    <h1 class="text-xl font-bold">VeggiePick</h1>
+<header class="w-full bg-gradient-to-r from-green-600 to-green-500 text-white shadow-md">
+  <div class="container mx-auto flex items-center justify-between px-6 py-4">
+    
+    <%= link_to root_path, class: "flex items-center gap-2 text-2xl font-extrabold tracking-wide hover:opacity-90 transition" do %>
+      <span>🥕</span>
+      <span>HIGASHIYAMA FARM</span>
+    <% end %>
+
+    <nav class="flex gap-6 text-sm font-medium">
+      <%= link_to "予約する", new_reservation_path, class: "hover:underline" %>
+      <%= link_to "予約確認", search_reservations_path, class: "hover:underline" %>
+    </nav>
+
   </div>
 </header>

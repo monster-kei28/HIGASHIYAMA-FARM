@@ -1,11 +1,20 @@
-<footer class="w-full bg-green-600 text-white py-6 mt-12">
-  <div class="container mx-auto px-4 flex flex-col items-center gap-2">
-    <p class="text-sm">&copy; 2026 VeggiePick</p>
+<footer class="w-full bg-gradient-to-r from-green-600 to-green-500 text-white mt-16 shadow-inner">
+  <div class="container mx-auto px-6 py-8 flex flex-col items-center gap-4">
 
-    <nav class="flex gap-4 text-sm">
-      <%= link_to '利用規約', terms_path, class: 'hover:underline' %>
-      <%= link_to 'プライバシーポリシー', privacy_path, class: 'hover:underline' %>
-      <%= link_to 'お問い合わせ', contact_path, class: 'hover:underline' %>
+    <%= link_to root_path, class: "flex items-center gap-2 text-xl font-extrabold tracking-wide hover:opacity-90 transition" do %>
+      <span>🥕</span>
+      <span>HIGASHIYAMA FARM</span>
+    <% end %>
+
+    <nav class="flex flex-wrap justify-center gap-6 text-sm font-medium">
+      <%= link_to '利用規約', terms_path, class: 'hover:underline hover:opacity-80 transition' %>
+      <%= link_to 'プライバシーポリシー', privacy_path, class: 'hover:underline hover:opacity-80 transition' %>
+      <%= link_to 'お問い合わせ', contact_path, class: 'hover:underline hover:opacity-80 transition' %>
     </nav>
+
+    <p class="text-xs opacity-80 mt-2">
+      &copy; <%= Time.current.year %> 東山farm All Rights Reserved.
+    </p>
+
   </div>
 </footer>
