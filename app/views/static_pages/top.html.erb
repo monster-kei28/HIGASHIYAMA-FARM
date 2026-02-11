@@ -1,44 +1,72 @@
-<h2 class="text-center mt-8 mb-4">
-  <span class="inline-block bg-orange-100 px-6 py-2 text-xl font-bold">
-    ご案内
-  </span>
-</h2>
+<div class="max-w-2xl mx-auto px-4 py-10 space-y-10">
 
-<section class="mx-auto bg-orange-100 px-6 py-4 text-left max-w-prose my-4">
-  <p>こちらは〇〇県〇〇市にある農園の季節ごとの野菜の収穫体験予約サイトです。</p>
-  <p>現在はさつまいも🍠の収穫体験を行なっております。</p>
-</section>
-
-<h2 class="text-center mt-8 mb-2">
-  <span class="inline-block bg-orange-100 px-6 py-2 text-xl font-bold">
-    営業日
-  </span>
-</h2>
-
-<div class="mx-auto mb-8 w-96">
-  <%= month_calendar events: @events do |date, events| %>
-    <div class="flex flex-col h-full">
-      <span class="text-sm font-bold text-orange-700">
-        <%= date.day %>
+  <!-- ご案内 -->
+  <section class="space-y-4">
+    <h2 class="text-center">
+      <span class="inline-block bg-orange-100 px-6 py-2 text-xl font-bold">
+        ご案内
       </span>
+    </h2>
 
-      <% events.each do |event| %>
-        <span class="mt-1 rounded bg-orange-200 px-1 text-xs">
-          <%= event.title %>
-        </span>
-      <% end %>
+    <div class="bg-white rounded-lg shadow-md p-6 border border-orange-100">
+      <p class="text-gray-700 leading-relaxed">
+        こちらは〇〇県〇〇市にある農園の季節ごとの野菜の収穫体験予約サイトです。
+      </p>
+      <p class="text-gray-700 leading-relaxed mt-2">
+        現在はさつまいも🍠の収穫体験を行なっております。
+      </p>
     </div>
-  <% end %>
-</div>
+  </section>
 
-<div class="text-center mb-10">
-  <%= link_to "ご予約はこちら", new_reservation_path, class: "bg-orange-100 hover:bg-orange-400 font-bold py-2 px-4 rounded inline-block border-2 border-orange-200" %>
-</div>
+  <!-- 営業日 -->
+  <section class="space-y-4">
+    <h2 class="text-center">
+      <span class="inline-block bg-orange-100 px-6 py-2 text-xl font-bold">
+        営業日
+      </span>
+    </h2>
 
-<div class="text-center mb-10">
-  <%= link_to "ご予約の確認はこちら",search_reservations_path, class: "bg-orange-100 hover:bg-orange-400 font-bold py-2 px-4 rounded inline-block border-2 border-orange-200" %>
-</div>
+    <div class="bg-white rounded-lg shadow-md p-6 border border-orange-100">
+      <div class="mx-auto w-full max-w-md">
+        <%= month_calendar events: @events do |date, events| %>
+          <div class="flex flex-col h-full">
+            <span class="text-sm font-bold text-orange-700">
+              <%= date.day %>
+            </span>
 
-<div class="text-center mt-10">
-  <%= link_to "農園関係者の方はこちら", admin_reservations_path, class: "bg-orange-100 hover:bg-orange-400 font-bold py-2 px-4 rounded inline-block border-2 border-orange-200 " %>
+            <% events.each do |event| %>
+              <span class="mt-1 rounded bg-orange-200 px-1 text-xs">
+                <%= event.title %>
+              </span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <!-- 次にすること -->
+  <section class="bg-white rounded-lg shadow-md p-6 border border-orange-100 space-y-4">
+    <h3 class="text-center font-bold text-gray-800">次にすることを選んでください</h3>
+
+    <div class="grid gap-3">
+
+      <%= link_to "はじめての方はこちら（使い方）", guide_path,
+          class: "w-full sm:max-w-sm sm:mx-auto block text-center px-4 py-3 font-bold rounded bg-orange-100 text-orange-800 hover:bg-orange-200" %>
+
+      <%= link_to "ご予約はこちら", new_reservation_path,
+          class: "w-full sm:max-w-sm sm:mx-auto block text-center px-4 py-3 font-bold rounded bg-orange-500 text-white hover:bg-orange-600" %>
+
+      <%= link_to "ご予約の確認はこちら", search_reservations_path,
+          class: "w-full sm:max-w-sm sm:mx-auto block text-center px-4 py-3 font-bold rounded border-2 border-orange-300 bg-white text-orange-700 hover:bg-orange-50" %>
+
+    </div>
+
+    <div class="pt-4 border-t">
+      <%= link_to "農園関係者の方はこちら", admin_reservations_path,
+          class: "w-full sm:max-w-sm sm:mx-auto block text-center px-4 py-3 font-bold rounded bg-gray-100 text-gray-800 hover:bg-gray-200" %>
+    </div>
+
+  </section>
+
 </div>
