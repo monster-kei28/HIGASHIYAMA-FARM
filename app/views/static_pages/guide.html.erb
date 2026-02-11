@@ -6,22 +6,34 @@
   </h2>
 
   <!-- イントロ -->
-  <section class="bg-white p-6 rounded-lg shadow-md border border-orange-100 space-y-4">
-    <h3 class="text-lg font-bold text-green-700">VeggiePickとは？</h3>
+  <section class="bg-white p-6 rounded-lg shadow-md border border-green-100 space-y-6">
+    <h3 class="text-xl font-bold text-green-700">
+      HIGASHIYAMA FARMへようこそ
+    </h3>
 
     <p class="text-gray-700 leading-relaxed">
-      VeggiePickは、農園の<strong>さつまいもの収穫体験</strong>をスマホから簡単に予約できるサービスです。
-      予約は<strong>LINEログインなしでもOK</strong>。はじめてでも迷わないように、このページで流れをまとめました。
+      HIGASHIYAMA FARMは<strong>さつまいもの収穫体験</strong>を
+      ご家族やご友人と楽しんでいただける農園です。
     </p>
 
-    <!-- CTA（横幅統一） -->
-    <div class="flex gap-4 justify-center max-w-md mx-auto pt-2">
+    <p class="text-gray-700 leading-relaxed">
+      土に触れ、季節を感じ、自分の手でさつまいもを掘り出すワクワク感。
+      そんな収穫の楽しさを、ここ東山の畑で体験してみませんか？
+    </p>
 
-      <%= link_to "今すぐ予約する", new_reservation_path,
-          class: "flex-1 text-center rounded bg-orange-500 px-6 py-3 font-bold text-white hover:bg-orange-600 shadow-md" %>
+    <p class="text-gray-700 leading-relaxed">
+      ご予約はスマートフォンから簡単にお申し込みいただけます。
+      LINEログインなしでもご利用可能ですので、どなたでも安心してご予約ください。
+    </p>
 
-      <%= link_to "予約を確認する", search_reservations_path,
-          class: "flex-1 text-center rounded border-2 border-orange-400 bg-white px-6 py-3 font-bold text-orange-700 hover:bg-orange-50" %>
+    <!-- CTA -->
+    <div class="flex gap-4 justify-center max-w-md mx-auto pt-4">
+
+      <%= link_to "収穫体験を予約する", new_reservation_path,
+          class: "flex-1 text-center rounded bg-orange-500 px-6 py-3 font-bold text-white hover:bg-orange-600 shadow-md transition" %>
+
+      <%= link_to "予約内容を確認する", search_reservations_path,
+          class: "flex-1 text-center rounded border-2 border-orange-400 bg-white px-6 py-3 font-bold text-orange-700 hover:bg-orange-50 transition" %>
 
     </div>
   </section>
