@@ -16,3 +16,11 @@ harvest_experiences = [
 harvest_experiences.each do |attrs|
   HarvestExperience.find_or_create_by!(title: attrs[:title])
 end
+
+first_admin_uid = ENV["FIRST_ADMIN_UID"]
+
+if first_admin_uid.present?
+  Admin.find_or_create_by!(uid: first_admin_uid)
+else
+  Rails.logger.warn("[seed] FIRST_ADMIN_UID is not set. Admin is not created.")
+end

@@ -10,9 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_02_03_155002) do
+ActiveRecord::Schema[7.2].define(version: 2026_02_14_073912) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "admins", force: :cascade do |t|
+    t.string "uid", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uid"], name: "index_admins_on_uid", unique: true
+  end
 
   create_table "harvest_experiences", force: :cascade do |t|
     t.string "title"
