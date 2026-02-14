@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   private
 
   def store_location
-    return unless request.get?
+    return unless request.get? || request.head?
     return if request.path.start_with?("/auth", "/admin")
 
     session[:return_to] = request.fullpath
