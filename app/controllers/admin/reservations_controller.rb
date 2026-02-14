@@ -1,7 +1,4 @@
-class Admin::ReservationsController < ApplicationController
-  # レビュー後nameとpassword変更しGitHubをprivateに変更
-  http_basic_authenticate_with name: "admin", password: "password"
-
+class Admin::ReservationsController < Admin::BaseController
   def index
     @reservations = Reservation.includes(:user, :harvest_experience)
                               .order(reserved_at: :desc)
