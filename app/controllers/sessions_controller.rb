@@ -5,6 +5,9 @@ class SessionsController < ApplicationController
     auth = request.env["omniauth.auth"]
     uid  = auth.uid
 
+    Rails.logger.info("[admin-debug] login_as=#{session[:login_as].inspect}")
+    Rails.logger.info("[admin-debug] session=#{session.to_hash.inspect}")
+
     # ✅ 管理者ログイン
     if session.delete(:login_as) == "admin"
       unless Admin.exists?(uid: uid)
