@@ -1,0 +1,36 @@
+<div class="min-h-[70vh] flex items-center justify-center px-4 py-10">
+  <div class="w-full max-w-md bg-white rounded-lg shadow-md border border-orange-100 p-6 space-y-5">
+    <div class="text-center space-y-2">
+      <h1 class="text-xl font-bold text-green-700">管理者ログイン</h1>
+      <p class="text-sm text-gray-600 leading-relaxed">
+        管理画面にアクセスするには、LINEで認証してください。
+      </p>
+    </div>
+
+    <div class="bg-orange-50 border border-orange-100 rounded-md p-4 text-sm text-gray-700">
+      <p class="font-semibold text-orange-800 mb-1">ご注意</p>
+      <ul class="list-disc ml-5 space-y-1">
+        <li>許可された管理者アカウントのみログインできます</li>
+        <li>ログインできない場合は、管理者UIDの登録状況をご確認ください</li>
+      </ul>
+    </div>
+
+    <%= button_to "/auth/line",
+                  method: :post,
+                  form: { data: { turbo: false } },
+                  class: "w-full inline-flex items-center justify-center gap-2 rounded-md bg-green-600 px-4 py-3 font-bold text-white shadow hover:bg-green-700 active:scale-[0.99] transition" do %>
+      <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/20">
+        <!-- シンプルな吹き出しアイコン風 -->
+        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M7.5 18.5l.3-2.2C5.7 15.2 4.5 13.6 4.5 11.8 4.5 8.9 7.9 6.5 12 6.5s7.5 2.4 7.5 5.3-3.4 5.3-7.5 5.3c-.9 0-1.8-.1-2.6-.3l-1.9 1.7z"
+                stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      LINEで管理者ログイン
+    <% end %>
+
+    <div class="text-center">
+      <%= link_to "トップへ戻る", root_path, class: "text-sm text-gray-600 hover:text-green-700 hover:underline" %>
+    </div>
+  </div>
+</div>
