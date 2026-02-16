@@ -1,0 +1,16 @@
+<div class="max-w-xl mx-auto px-4 py-10 space-y-4">
+  <h1 class="text-2xl font-bold text-center">管理者ページ</h1>
+
+  <div class="bg-white p-6 rounded-lg shadow-md space-y-3">
+    <%= link_to "予約一覧へ", admin_reservations_path,
+          class: "block text-center rounded bg-green-600 text-white py-2" %>
+
+    <%= link_to "カレンダー設定へ", admin_calendar_events_path,
+          class: "block text-center rounded bg-orange-500 text-white py-2" %>
+
+    <div class="pt-2 text-center">
+      <%= button_to "ログアウト", admin_logout_path, method: :delete,
+            class: "text-sm text-gray-600 underline" %>
+    </div>
+  </div>
+</div>

@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
       end
 
       session[:admin_uid] = uid
-      redirect_to admin_reservations_path, notice: "管理者としてログインしました"
+      redirect_to admin_root_path, notice: "管理者としてログインしました"
       return
     end
 
