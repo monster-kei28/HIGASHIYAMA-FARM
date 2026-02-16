@@ -7,6 +7,6 @@ class CreateCalendarEvents < ActiveRecord::Migration[7.2]
       t.timestamps
     end
 
-    add_index :calendar_events, [:event_date, :kind], unique: true
+    add_index :calendar_events, [ :event_date, :kind ], unique: true
   end
 end
