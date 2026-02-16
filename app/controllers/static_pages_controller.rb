@@ -1,7 +1,8 @@
 class StaticPagesController < ApplicationController
   def top
-    @events = []  # ← 将来 Event.all に置き換える
+    @events = CalendarEvent.all
   end
+
   def terms; end
   def privacy; end
   def contact; end
