@@ -1,6 +1,7 @@
 class Admin::CalendarEventsController < Admin::BaseController
   def index
-    @month = params[:month].present? ? Date.parse(params[:month]) : Date.current
+    raw = params[:month].presence || Date.current.to_s
+    @month = Date.parse(raw)
     @start_date = @month.beginning_of_month
     @end_date   = @month.end_of_month
 
@@ -13,19 +14,29 @@ class Admin::CalendarEventsController < Admin::BaseController
     start_date = month.beginning_of_month
     end_date   = month.end_of_month
 
-    events_params = params.fetch(:events, {}) # {"YYYY-MM-DD"=>"open/closed/''"}
+    events_params = params.fetch(:events, {})
 
     CalendarEvent.transaction do
-      # ✅ その月は丸ごと置き換え（正確・シンプル）
+      # 月内は一旦全消し（未設定も反映したいので）
       CalendarEvent.where(event_date: start_date..end_date).delete_all
 
       events_params.each do |date_str, kind|
         next if kind.blank?
-        CalendarEvent.create!(event_date: Date.parse(date_str), kind: kind)
+
+        date = Date.parse(date_str)
+
+        # 月外（前月/翌月）は無視（month_calendar対策）
+        next unless (start_date..end_date).cover?(date)
+
+        # 同じ日付が params 内で重複しても上書きで1件に収束
+        CalendarEvent.find_or_initialize_by(event_date: date).tap do |e|
+          e.kind = kind
+          e.save!
+        end
       end
     end
 
-    redirect_to admin_calendar_events_path(month: month.strftime("%Y-%m-01")),
+    redirect_to admin_calendar_events_path(month: month.beginning_of_month.strftime("%Y-%m-%d")),
                 notice: "月のカレンダー設定を保存しました"
   rescue ArgumentError
     redirect_to admin_calendar_events_path, alert: "日付の形式が不正です"

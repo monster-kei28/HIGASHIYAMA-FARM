@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_02_16_124315) do
+ActiveRecord::Schema[7.2].define(version: 2026_02_16_141018) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,7 +27,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_16_124315) do
     t.string "note"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["event_date", "kind"], name: "index_calendar_events_on_event_date_and_kind", unique: true
+    t.index ["event_date"], name: "index_calendar_events_on_event_date", unique: true
   end
 
   create_table "harvest_experiences", force: :cascade do |t|
