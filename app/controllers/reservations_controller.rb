@@ -30,15 +30,15 @@ class ReservationsController < ApplicationController
     end
 
     if @user.save && @reservation.save
-      # ✅ LINEログインユーザーだけ通知（失敗しても予約は成功）
-      if logged_in? && current_user.provider == "line" && current_user.uid.present?
+      # ✅ 予約に紐づくユーザーに通知（失敗しても予約は成功）
+      if @user.provider == "line" && @user.uid.present?
         begin
           LineMessaging::PushText.call(
-            to: current_user.uid,
-            text: "予約が完了しました。\n日時: #{@reservation.reserved_at&.strftime('%Y-%m-%d %H:%M')}\n人数: #{@reservation.number_of_people}名"
+            to: @user.uid,
+            text: LineMessaging::Messages::ReservationCompleted.build(@reservation)
           )
         rescue => e
-          Rails.logger.error("[LINE] push failed user_id=#{current_user.id} uid=#{current_user.uid} err=#{e.class} #{e.message}")
+          Rails.logger.error("[LINE] push failed user_id=#{@user.id} uid=#{@user.uid} err=#{e.class} #{e.message}")
         end
       end
 
