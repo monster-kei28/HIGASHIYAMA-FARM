@@ -23,13 +23,19 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params)
     @reservation.user = @user
 
+    # reserved_date + reserved_time → reserved_at
+    if @reservation.reserved_date.present? && @reservation.reserved_time.present?
+      dt_str = "#{@reservation.reserved_date} #{@reservation.reserved_time}"
+      @reservation.reserved_at = Time.zone.parse(dt_str)
+    end
+
     if @user.save && @reservation.save
       # ✅ LINEログインユーザーだけ通知（失敗しても予約は成功）
       if logged_in? && current_user.provider == "line" && current_user.uid.present?
         begin
           LineMessaging::PushText.call(
             to: current_user.uid,
-            text: "予約が完了しました。\n日時: #{@reservation.reserved_at}\n人数: #{@reservation.number_of_people}名"
+            text: "予約が完了しました。\n日時: #{@reservation.reserved_at&.strftime('%Y-%m-%d %H:%M')}\n人数: #{@reservation.number_of_people}名"
           )
         rescue => e
           Rails.logger.error("[LINE] push failed user_id=#{current_user.id} uid=#{current_user.uid} err=#{e.class} #{e.message}")
@@ -74,7 +80,8 @@ class ReservationsController < ApplicationController
     params.require(:reservation).permit(
       :harvest_experience_id,
       :number_of_people,
-      :reserved_at
+      :reserved_date,
+      :reserved_time
     )
   end
 end
