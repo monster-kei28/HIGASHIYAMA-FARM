@@ -2,11 +2,12 @@ class ReservationsController < ApplicationController
   def new
     @reservation = Reservation.new
     @harvest_experiences = HarvestExperience.all
+    @events = CalendarEvent.all
   end
 
   def create
     @harvest_experiences = HarvestExperience.all
-
+    @events = CalendarEvent.all
     @user =
       if logged_in?
         current_user.tap do |u|
