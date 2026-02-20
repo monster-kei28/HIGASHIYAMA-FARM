@@ -23,12 +23,6 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params)
     @reservation.user = @user
 
-    # reserved_date + reserved_time → reserved_at
-    if @reservation.reserved_date.present? && @reservation.reserved_time.present?
-      dt_str = "#{@reservation.reserved_date} #{@reservation.reserved_time}"
-      @reservation.reserved_at = Time.zone.parse(dt_str)
-    end
-
     if @user.save && @reservation.save
       # ✅ 予約に紐づくユーザーに通知（失敗しても予約は成功）
       if @user.provider == "line" && @user.uid.present?

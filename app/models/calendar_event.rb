@@ -1,7 +1,7 @@
 class CalendarEvent < ApplicationRecord
 end
 class CalendarEvent < ApplicationRecord
-  enum kind: { open: 0, closed: 1 }
+  enum :kind, { open: 0, closed: 1 }
 
   validates :event_date, presence: true
   validates :kind, presence: true

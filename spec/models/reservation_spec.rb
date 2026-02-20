@@ -34,10 +34,21 @@ RSpec.describe Reservation, type: :model do
       end
     end
 
-    context 'reserved_at' do
-      it 'nil の場合は無効' do
-        reservation.reserved_at = nil
+    context "reserved_at" do
+      it "reserved_date が nil の場合は無効（reserved_at を生成できない）" do
+        reservation.reserved_date = nil
         expect(reservation).to be_invalid
+      end
+
+      it "reserved_time が nil の場合は無効（reserved_at を生成できない）" do
+        reservation.reserved_time = nil
+        expect(reservation).to be_invalid
+      end
+
+      it "reserved_date と reserved_time があれば reserved_at が自動で入る" do
+        reservation.reserved_at = nil
+        reservation.valid?
+        expect(reservation.reserved_at).to be_present
       end
     end
   end
