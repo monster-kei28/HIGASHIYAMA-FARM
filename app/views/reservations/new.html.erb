@@ -93,15 +93,27 @@
       </div>
 
       <div>
-        <%= f.label :reserved_at, "希望日時", class: "block text-gray-700 font-medium mb-2" %>
+        <label class="block text-gray-700 font-medium mb-2">希望日時</label>
 
-        <%= f.datetime_local_field :reserved_at,
-            class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300" %>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <!-- 日付 -->
+          <div class="flex-1">
+            <%= f.date_field :reserved_date,
+                class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300" %>
+          </div>
+
+          <!-- 時間（10:00 / 13:00） -->
+          <div class="flex-1">
+            <%= f.select :reserved_time,
+                options_for_select([["10:00", "10:00"], ["13:00", "13:00"]], params.dig(:reservation, :reserved_time)),
+                { prompt: "時間を選択" },
+                class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300" %>
+          </div>
+        </div>
 
         <div class="mt-2 space-y-1 text-sm text-gray-500">
-          <p>例：2026-02-15 10:00</p>
-          <p>※受付時間は10:00〜16:00です</p>
-          <p>※営業日カレンダーを参考に日時を選んでください</p>
+          <p>※開催は1日2回（10:00 / 13:00）です</p>
+          <p>※営業日カレンダーを参考に日付を選んでください</p>
         </div>
       </div>
 

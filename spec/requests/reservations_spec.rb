@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "Reservations", type: :request do
   describe "GET /reservations/new" do
@@ -20,7 +20,8 @@ RSpec.describe "Reservations", type: :request do
               phone_number: "09012345678",
               harvest_experience_id: harvest_experience.id,
               number_of_people: 2,
-              reserved_at: Time.current
+              reserved_date: Date.current,
+              reserved_time: "10:00"
             }
           }
         }.to change(Reservation, :count).by(1)
@@ -41,12 +42,13 @@ RSpec.describe "Reservations", type: :request do
               phone_number: "09012345678",
               harvest_experience_id: harvest_experience.id,
               number_of_people: nil, # バリデーション違反
-              reserved_at: Time.current
+              reserved_date: Date.current,
+              reserved_time: "10:00"
             }
           }
         }.not_to change(Reservation, :count)
 
-        expect(response).to have_http_status(:unprocessable_content)
+        expect(response).to have_http_status(422)
       end
 
       context "同じ電話番号のユーザーが既に存在する場合" do
@@ -61,17 +63,19 @@ RSpec.describe "Reservations", type: :request do
                 phone_number: user.phone_number,
                 harvest_experience_id: harvest_experience.id,
                 number_of_people: 3,
-                reserved_at: Time.current
+                reserved_date: Date.current,
+                reserved_time: "10:00"
               }
             }
           }.to change(User, :count).by(0)
-          .and change(Reservation, :count).by(1)
+           .and change(Reservation, :count).by(1)
 
           reservation = Reservation.last
           expect(reservation.user).to eq user
           expect(user.reload.name).to eq "別の名前で上書き"
 
           expect(response).to redirect_to(root_path)
+          expect(flash[:notice]).to eq "予約が完了しました"
         end
       end
     end
@@ -103,7 +107,7 @@ RSpec.describe "Reservations", type: :request do
           phone_number: "09000000000"
         }
 
-        expect(response).to have_http_status(:unprocessable_content)
+        expect(response).to have_http_status(422)
       end
     end
   end
