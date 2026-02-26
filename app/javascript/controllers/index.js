@@ -8,3 +8,6 @@ application.register("calendar-bulk", CalendarBulkController)
 
 import MenuController from "./menu_controller"
 application.register("menu", MenuController)
+
+import ClosedDateBlockerController from "./closed_date_blocker_controller"
+application.register("closed-date-blocker", ClosedDateBlockerController)

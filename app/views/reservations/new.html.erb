@@ -97,9 +97,21 @@
 
         <div class="flex flex-col sm:flex-row gap-3">
           <!-- 日付 -->
-          <div class="flex-1">
+          <div class="flex-1"
+              data-controller="closed-date-blocker"
+              data-closed-date-blocker-disabled-dates-value="<%= @closed_dates.map(&:to_s).to_json %>">
+
             <%= f.date_field :reserved_date,
-                class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300" %>
+                min: Date.current.to_s,
+                max: (Date.current + 60.days).to_s,
+                class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300",
+                data: {
+                  closed_date_blocker_target: "input",
+                  action: "change->closed-date-blocker#check"
+                } %>
+
+            <p class="mt-2 rounded bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700 hidden"
+              data-closed-date-blocker-target="message"></p>
           </div>
 
           <!-- 時間（10:00 / 13:00） -->

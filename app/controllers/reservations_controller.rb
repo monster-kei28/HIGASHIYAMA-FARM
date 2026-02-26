@@ -3,11 +3,20 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new
     @harvest_experiences = HarvestExperience.all
     @events = CalendarEvent.all
+
+    # ✅ 追加：休み日（表示月ぶん）
+    range = Date.current..(Date.current + 60.days)
+    @closed_dates = CalendarEvent.closed_dates_between(range)
   end
 
   def create
     @harvest_experiences = HarvestExperience.all
     @events = CalendarEvent.all
+
+    # ✅ 追加：エラーで render :new したときも必要
+    range = Date.current..(Date.current + 60.days)
+    @closed_dates = CalendarEvent.closed_dates_between(range)
+
     @user =
       if logged_in?
         current_user.tap do |u|
