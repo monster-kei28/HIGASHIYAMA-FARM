@@ -35,8 +35,22 @@ class Reservation < ApplicationRecord
     return if reserved_at.blank?
 
     date = reserved_at.to_date
-    min = Date.current
-    max = Date.current + 60.days   # ← ここを運用に合わせて変える（例：今月末なら Date.current.end_of_month）
+
+    today = Date.current
+    now = Time.zone.now
+
+    # 明日の予約締切は今日の17:00
+    tomorrow_deadline = Time.zone.local(today.year, today.month, today.day, 17, 0, 0)
+
+    # 17:00を過ぎたら最短予約日は「明後日」
+    min =
+      if now >= tomorrow_deadline
+        today + 2.days
+      else
+        today + 1.day
+      end
+
+    max = today + 60.days  # ここはあなたの設定に合わせる
 
     if date < min || date > max
       errors.add(:reserved_at, "は予約可能な期間外です")
