@@ -97,9 +97,21 @@
 
         <div class="flex flex-col sm:flex-row gap-3">
           <!-- 日付 -->
-          <div class="flex-1">
+          <div class="flex-1"
+              data-controller="closed-date-blocker"
+              data-closed-date-blocker-disabled-dates-value="<%= @closed_dates.map(&:to_s).to_json %>">
+
             <%= f.date_field :reserved_date,
-                class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300" %>
+                min: @min_reservable_date.to_s,
+                max: @max_reservable_date.to_s,
+                class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300",
+                data: {
+                  closed_date_blocker_target: "input",
+                  action: "change->closed-date-blocker#check"
+                } %>
+
+            <p class="mt-2 rounded bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700 hidden"
+              data-closed-date-blocker-target="message"></p>
           </div>
 
           <!-- 時間（10:00 / 13:00） -->
@@ -113,7 +125,11 @@
 
         <div class="mt-2 space-y-1 text-sm text-gray-500">
           <p>※開催は1日2回（10:00 / 13:00）です</p>
-          <p>※営業日カレンダーを参考に日付を選んでください</p>
+          <p>※ご予約は明日以降、最大60日先まで可能です</p>
+          <p class="text-red-600 font-medium">
+            ※明日のご予約は前日17:00までにお申し込みください
+          </p>
+          <p>※営業日カレンダーをご確認のうえ日付を選択してください</p>
         </div>
       </div>
 

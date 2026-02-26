@@ -1,6 +1,11 @@
 require "rails_helper"
 
 RSpec.describe "Reservations", type: :request do
+  let(:valid_date) { Date.current + 7.days } # ✅ 17時締切の影響を受けにくい
+  before do
+    CalendarEvent.find_or_create_by!(event_date: valid_date) { |e| e.kind = :open }
+  end
+
   describe "GET /reservations/new" do
     it "新規予約画面が表示される" do
       get new_reservation_path
@@ -20,7 +25,7 @@ RSpec.describe "Reservations", type: :request do
               phone_number: "09012345678",
               harvest_experience_id: harvest_experience.id,
               number_of_people: 2,
-              reserved_date: Date.current,
+              reserved_date: valid_date, # ✅ 変更
               reserved_time: "10:00"
             }
           }
@@ -42,7 +47,7 @@ RSpec.describe "Reservations", type: :request do
               phone_number: "09012345678",
               harvest_experience_id: harvest_experience.id,
               number_of_people: nil, # バリデーション違反
-              reserved_date: Date.current,
+              reserved_date: valid_date, # ✅ 変更
               reserved_time: "10:00"
             }
           }
@@ -63,7 +68,7 @@ RSpec.describe "Reservations", type: :request do
                 phone_number: user.phone_number,
                 harvest_experience_id: harvest_experience.id,
                 number_of_people: 3,
-                reserved_date: Date.current,
+                reserved_date: valid_date, # ✅ 変更
                 reserved_time: "10:00"
               }
             }
