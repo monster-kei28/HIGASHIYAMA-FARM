@@ -18,6 +18,7 @@
     <table class="w-full text-sm">
       <thead class="bg-orange-50">
         <tr>
+          <th class="text-left px-4 py-3">名前</th>
           <th class="text-left px-4 py-3">UID</th>
           <th class="text-left px-4 py-3">追加日</th>
           <th class="px-4 py-3"></th>
@@ -27,17 +28,26 @@
       <tbody class="divide-y">
         <% @admins.each do |admin| %>
           <tr class="hover:bg-orange-50/40">
-            <td class="px-4 py-3 font-mono text-gray-800 break-all">
-              <%= admin.uid %>
+            <td class="px-4 py-3 text-gray-800">
+              <span class="font-bold">
+                <%= admin.user&.name.presence || "（未ログイン）" %>
+              </span>
+
               <% if admin.uid == session[:admin_uid] %>
                 <span class="ml-2 inline-flex items-center rounded-full bg-green-100 px-2 py-0.5 text-xs font-bold text-green-800">
                   あなた
                 </span>
               <% end %>
             </td>
+
+            <td class="px-4 py-3 font-mono text-xs text-gray-700 break-all">
+              <%= admin.uid %>
+            </td>
+
             <td class="px-4 py-3 text-gray-600">
               <%= l(admin.created_at, format: :short) rescue admin.created_at %>
             </td>
+
             <td class="px-4 py-3 text-right">
               <%= button_to "削除",
                             admin_admin_path(admin),

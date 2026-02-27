@@ -15,20 +15,26 @@
     <%= form_with model: [:admin, @admin] do |f| %>
       <div class="space-y-2">
         <%= f.label :uid, "追加する管理者のLINE UID", class: "text-sm font-bold text-gray-700" %>
+
         <%= f.text_field :uid,
-                         class: "w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-200",
-                         placeholder: "Ucxxxxxxxxxxxxxxxxxxxxxxxxxxxx" %>
-        <p class="text-xs text-gray-500">
-          ※ UID は LINE Login の auth.uid（ユーザーID）です
+              class: "w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-200 font-mono",
+              placeholder: "Ucxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+              autocapitalize: "off",
+              autocomplete: "off",
+              spellcheck: false %>
+
+        <p class="text-xs text-gray-500 leading-relaxed">
+          ※ 追加したい人に <strong>先にLINEログイン</strong>してもらう必要があります。<br>
+          （ログイン済みのユーザーを検索して、管理者に紐付けるため。名前も表示できます）
         </p>
       </div>
 
       <div class="pt-4 space-y-3">
         <%= f.submit "追加する",
-                     class: "w-full rounded-md bg-green-600 px-4 py-3 font-bold text-white shadow hover:bg-green-700 transition" %>
+              class: "w-full rounded-md bg-green-600 px-4 py-3 font-bold text-white shadow hover:bg-green-700 transition" %>
 
         <%= link_to "戻る", admin_admins_path,
-                    class: "block w-full text-center rounded-md bg-white px-4 py-3 font-bold text-gray-700 border border-gray-200 hover:bg-gray-50 transition" %>
+              class: "block w-full text-center rounded-md bg-white px-4 py-3 font-bold text-gray-700 border border-gray-200 hover:bg-gray-50 transition" %>
       </div>
     <% end %>
   </div>
