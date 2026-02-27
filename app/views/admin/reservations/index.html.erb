@@ -1,50 +1,68 @@
-<h2 class="text-center mt-8 mb-6 text-2xl font-bold">
-  予約一覧（管理者）
-</h2>
+<div class="max-w-4xl mx-auto px-4 py-8 space-y-6">
+  <div class="text-center space-y-1">
+    <h2 class="text-xl font-bold text-green-700">予約一覧（管理者）</h2>
+    <p class="text-xs text-gray-600">予約の確認・削除ができます</p>
+  </div>
 
-<table class="mx-auto border-collapse border border-gray-300 w-11/12 text-sm">
-  <thead class="bg-gray-100">
-    <tr>
-      <th class="border px-3 py-2">名前</th>
-      <th class="border px-3 py-2">電話</th>
-      <th class="border px-3 py-2">体験</th>
-      <th class="border px-3 py-2">人数</th>
-      <th class="border px-3 py-2">日時</th>
-      <th class="border px-3 py-2">操作</th>
-    </tr>
-  </thead>
+  <div class="bg-white rounded-lg shadow-md border border-orange-100 p-4 space-y-4">
+    <div class="flex items-center justify-between text-xs text-gray-600">
+      <span>
+        件数：
+        <span class="font-bold text-gray-800"><%= @reservations.size %></span>
+      </span>
+    </div>
 
-  <tbody>
-    <% @reservations.each do |r| %>
-      <tr class="text-center">
-        <td class="border px-2 py-2"><%= r.user.name %></td>
-        <td class="border px-2 py-2"><%= r.user.phone_number %></td>
-        <td class="border px-2 py-2"><%= r.harvest_experience.title %></td>
-        <td class="border px-2 py-2"><%= r.number_of_people %></td>
-        <td class="border px-2 py-2">
-          <%= r.reserved_at.strftime("%Y/%m/%d %H:%M") %>
-        </td>
-        <td class="border px-2 py-2">
-          <%= link_to "詳細", admin_reservation_path(r),
-              class: "text-blue-600 underline mr-2" %>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse text-xs">
+        <thead class="bg-orange-50">
+          <tr>
+            <th class="border px-2 py-2 text-left">名前</th>
+            <th class="border px-2 py-2 text-left">電話</th>
+            <th class="border px-2 py-2 text-left">体験</th>
+            <th class="border px-2 py-2 text-right">人数</th>
+            <th class="border px-2 py-2 text-left">日時</th>
+            <th class="border px-2 py-2 text-center">操作</th>
+          </tr>
+        </thead>
 
-          <%= link_to "削除",
-              admin_reservation_path(r),
-              data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" },
-              class: "text-red-600 underline" %>
-        </td>
-      </tr>
+        <tbody class="divide-y">
+          <% @reservations.each do |r| %>
+            <tr class="hover:bg-orange-50/40">
+              <td class="border px-2 py-2"><%= r.user.name %></td>
+              <td class="border px-2 py-2"><%= r.user.phone_number %></td>
+              <td class="border px-2 py-2"><%= r.harvest_experience.title %></td>
+              <td class="border px-2 py-2 text-right"><%= r.number_of_people %></td>
+              <td class="border px-2 py-2">
+                <%= r.reserved_at&.strftime("%Y/%m/%d %H:%M") %>
+              </td>
+              <td class="border px-2 py-2">
+                <div class="flex items-center justify-center gap-2">
+                  <%= link_to "詳細",
+                      admin_reservation_path(r),
+                      class: "px-2 py-1 text-blue-700 border border-blue-200 rounded hover:bg-blue-50 font-bold text-xs" %>
+
+                  <%= link_to "削除",
+                      admin_reservation_path(r),
+                      data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" },
+                      class: "px-2 py-1 text-red-600 border border-red-200 rounded hover:bg-red-50 font-bold text-xs" %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if @reservations.empty? %>
+      <div class="text-center text-xs text-gray-600 py-4">
+        予約はまだありません。
+      </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div>
 
-<div class="text-center mt-8 space-x-3">
-  <%= link_to "管理者一覧", admin_admins_path,
-      class: "bg-white hover:bg-gray-50 font-bold py-2 px-6 rounded border border-green-200 text-green-700" %>
-
-  <%= link_to "管理者トップへ", admin_root_path,
-      class: "bg-gray-200 hover:bg-gray-300 font-bold py-2 px-6 rounded border" %>
-
-  <%= link_to "サイトのトップへ", root_path,
-      class: "bg-gray-200 hover:bg-gray-300 font-bold py-2 px-6 rounded border" %>
+<div class="text-center mt-6">
+  <%= link_to "管理者トップへ戻る",
+      admin_root_path,
+      class: "inline-flex items-center justify-center rounded-md bg-gray-200 px-5 py-2 text-sm font-bold text-gray-700 border hover:bg-gray-300 transition" %>
 </div>
