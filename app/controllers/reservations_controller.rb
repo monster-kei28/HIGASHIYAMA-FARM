@@ -87,6 +87,20 @@ class ReservationsController < ApplicationController
 
   def destroy
     @reservation = Reservation.find(params[:id])
+    user = @reservation.user
+
+    # ✅ 削除前に通知（失敗してもキャンセルは成功）
+    if user.provider == "line" && user.uid.present?
+      begin
+        LineMessaging::PushText.call(
+          to: user.uid,
+          text: LineMessaging::Messages::ReservationCanceled.build(@reservation)
+        )
+      rescue => e
+        Rails.logger.error("[LINE] cancel push failed user_id=#{user.id} uid=#{user.uid} err=#{e.class} #{e.message}")
+      end
+    end
+
     @reservation.destroy
     redirect_to root_path, alert: "予約を取り消しました"
   end
