@@ -24,7 +24,9 @@ Rails.application.routes.draw do
 
     resources :reservations, only: %i[index show destroy]
 
-    resources :admins, only: %i[index new create destroy]
+    resources :admins, only: %i[index create destroy]
+
+    resources :users, only: %i[index]
 
     resources :calendar_events, only: %i[index] do
       collection do

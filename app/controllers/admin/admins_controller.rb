@@ -3,27 +3,21 @@ class Admin::AdminsController < Admin::BaseController
     @admins = Admin.includes(:user).order(created_at: :asc)
   end
 
-  def new
-    @admin = Admin.new
-  end
-
   def create
     uid = admin_params[:uid].to_s.strip
 
     user = User.find_by(provider: "line", uid: uid)
     unless user
-      @admin = Admin.new(uid: uid)
-      @admin.errors.add(:base, "このUIDのユーザーが見つかりません（先にその人にLINEログインしてもらってください）")
-      render :new, status: :unprocessable_entity
+      redirect_to admin_users_path, alert: "ユーザーが見つかりません（先にLINEログインしてもらってください）"
       return
     end
 
-    @admin = Admin.new(uid: uid, user: user)
+    admin = Admin.new(uid: uid, user: user)
 
-    if @admin.save
+    if admin.save
       redirect_to admin_admins_path, notice: "管理者を追加しました"
     else
-      render :new, status: :unprocessable_entity
+      redirect_to admin_admins_path, alert: admin.errors.full_messages.first
     end
   end
 
