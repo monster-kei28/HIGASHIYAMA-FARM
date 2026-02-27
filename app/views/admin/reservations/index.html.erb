@@ -38,7 +38,13 @@
   </tbody>
 </table>
 
-<div class="text-center mt-8">
-  <%= link_to "トップへ戻る", root_path,
-      class: "bg-gray-200 hover:bg-gray-400 font-bold py-2 px-6 rounded border" %>
+<div class="text-center mt-8 space-x-3">
+  <%= link_to "管理者一覧", admin_admins_path,
+      class: "bg-white hover:bg-gray-50 font-bold py-2 px-6 rounded border border-green-200 text-green-700" %>
+
+  <%= link_to "管理者トップへ", admin_root_path,
+      class: "bg-gray-200 hover:bg-gray-300 font-bold py-2 px-6 rounded border" %>
+
+  <%= link_to "サイトのトップへ", root_path,
+      class: "bg-gray-200 hover:bg-gray-300 font-bold py-2 px-6 rounded border" %>
 </div>
