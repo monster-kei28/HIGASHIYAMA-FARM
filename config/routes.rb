@@ -17,14 +17,17 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    root "dashboard#show" # ✅ 追加：管理者トップ
+    root "dashboard#show"
 
     get "login", to: "sessions#new"
     delete "logout", to: "sessions#destroy"
 
     resources :reservations, only: %i[index show destroy]
 
-    # ✅ 月カレンダーで一括設定
+    resources :admins, only: %i[index create destroy]
+
+    resources :users, only: %i[index]
+
     resources :calendar_events, only: %i[index] do
       collection do
         post :bulk_update

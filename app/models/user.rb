@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :reservations, dependent: :destroy
+  has_one :admin, dependent: :destroy
 
   validates :name, presence: true, on: :update
 
