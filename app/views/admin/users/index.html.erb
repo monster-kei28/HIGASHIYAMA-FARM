@@ -3,7 +3,7 @@
     <div class="text-center space-y-1">
       <h1 class="text-xl font-bold text-green-700">LINEログイン済みユーザー</h1>
       <p class="text-sm text-gray-600">
-        ここから管理者に追加できます（UID手入力不要）
+        ここから管理者に追加できます
       </p>
     </div>
 
@@ -23,7 +23,6 @@
           <tr>
             <th class="text-left px-4 py-3">名前</th>
             <th class="text-left px-4 py-3">電話</th>
-            <th class="text-left px-4 py-3">UID</th>
             <th class="text-left px-4 py-3">登録日</th>
             <th class="px-4 py-3 text-right">操作</th>
           </tr>
@@ -45,10 +44,6 @@
 
               <td class="px-4 py-3 text-gray-700 whitespace-nowrap">
                 <%= user.phone_number.presence || "—" %>
-              </td>
-
-              <td class="px-4 py-3 font-mono text-xs text-gray-700 break-all">
-                <%= user.uid %>
               </td>
 
               <td class="px-4 py-3 text-gray-600 whitespace-nowrap">
