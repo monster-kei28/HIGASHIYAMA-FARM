@@ -4,8 +4,8 @@
     <div class="text-center space-y-1">
       <h1 class="text-2xl font-bold text-green-700">管理者一覧</h1>
       <p class="text-sm text-gray-600">
-        現在の管理者UID:
-        <span class="font-mono text-gray-800 break-all"><%= session[:admin_uid] %></span>
+        現在の管理者:
+        <span class="font-bold text-gray-800"><%= @current_admin&.user&.name.presence || "（未入力）" %></span>
       </p>
     </div>
 
@@ -22,7 +22,6 @@
         <thead class="bg-orange-50">
           <tr>
             <th class="text-left px-4 py-3">名前</th>
-            <th class="text-left px-4 py-3">UID</th>
             <th class="text-left px-4 py-3">追加日</th>
             <th class="px-4 py-3 text-right">操作</th>
           </tr>
@@ -43,10 +42,6 @@
                     </span>
                   <% end %>
                 </div>
-              </td>
-
-              <td class="px-4 py-3 font-mono text-xs text-gray-700 break-all">
-                <%= admin.uid %>
               </td>
 
               <td class="px-4 py-3 text-gray-600 whitespace-nowrap">
