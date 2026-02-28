@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Myapp" %></title>
+    <title><%= content_for(:title) || "HIGASHIYAMA FARM｜さつまいも収穫体験予約" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
+
+    <title><%= content_for(:title) || "HIGASHIYAMA FARM" %></title>
+
+    <meta property="og:title" content="<%= content_for?(:title) ? yield(:title) : 'HIGASHIYAMA FARM' %>">
+    <meta property="og:description" content="千葉県柏市の農園でさつまいも収穫体験。家族で楽しめる収穫体験を開催しています。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:image" content="<%= image_url('HIGASHIYAMA_FARM.png') %>">
+    <meta property="og:site_name" content="HIGASHIYAMA FARM">
+
+    <meta name="twitter:card" content="summary_large_image">
 
     <!-- link rel="manifest" href="/manifest.json" -->
     <link rel="icon" href="/icon.png" type="image/png">
