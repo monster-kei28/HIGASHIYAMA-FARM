@@ -11,10 +11,6 @@ class ReservationsController < ApplicationController
       reserved_date: selected_date&.to_s
     )
 
-    if selected_date.present?
-      flash.now[:notice] = "#{selected_date.strftime('%Y年%m月%d日')}を選択しました。ご希望の時間を選んで予約を完了してください。"
-    end
-
     @harvest_experiences = HarvestExperience.all
     @events = CalendarEvent.all
 
