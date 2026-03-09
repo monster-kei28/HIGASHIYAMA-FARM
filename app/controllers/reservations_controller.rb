@@ -1,10 +1,19 @@
 class ReservationsController < ApplicationController
   def new
-    @reservation = Reservation.new
+    selected_date =
+      begin
+        params[:date].present? ? Date.parse(params[:date]) : nil
+      rescue ArgumentError
+        nil
+      end
+
+    @reservation = Reservation.new(
+      reserved_date: selected_date&.to_s
+    )
+
     @harvest_experiences = HarvestExperience.all
     @events = CalendarEvent.all
 
-    # ✅ 追加：休み日（表示月ぶん）
     range = Date.current..(Date.current + 60.days)
     @closed_dates = CalendarEvent.closed_dates_between(range)
 
