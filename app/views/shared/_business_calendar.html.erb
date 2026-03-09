@@ -5,11 +5,24 @@
 
   <div class="mx-auto w-full max-w-md">
     <%= month_calendar events: events do |date, day_events| %>
+      <% reservable = !CalendarEvent.closed_on?(date) &&
+                      date >= min_reservable_date &&
+                      date <= max_reservable_date %>
+
       <div class="flex flex-col h-full">
-        <span class="text-sm font-bold text-orange-700"><%= date.day %></span>
+        <% if reservable %>
+          <%= link_to new_reservation_path(date: date),
+              class: "block text-sm font-bold text-orange-700 hover:underline" do %>
+            <%= date.day %>
+          <% end %>
+        <% else %>
+          <span class="block text-sm font-bold text-gray-400">
+            <%= date.day %>
+          </span>
+        <% end %>
 
         <% day_events.each do |event| %>
-          <span class="mt-1 rounded bg-orange-200 px-1 text-xs">
+          <span class="mt-1 rounded px-1 text-xs <%= event.closed? ? 'bg-gray-200 text-gray-600' : 'bg-orange-200 text-gray-800' %>">
             <%= event.title %>
           </span>
         <% end %>
