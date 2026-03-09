@@ -21,7 +21,9 @@
   <%= render "shared/business_calendar",
     events: @events,
     title: "営業日カレンダー",
-    note: "※営業時間は10:00〜16:00です" %>
+    note: "※開催は1日2回（10:00 / 13:00）ですです",
+    min_reservable_date: @min_reservable_date,
+    max_reservable_date: @max_reservable_date %>
 
   <!-- LINEログイン -->
   <section class="bg-white p-6 rounded-lg shadow-md border border-orange-100 space-y-3">
@@ -52,7 +54,7 @@
   </section>
 
   <!-- 入力フォーム -->
-  <section class="bg-white p-6 rounded-lg shadow-md border border-orange-100">
+  <section id="reservation-form" class="bg-white p-6 rounded-lg shadow-md border border-orange-100">
     <%= form_with model: @reservation, local: true, class: "space-y-5" do |f| %>
 
       <div>
@@ -102,6 +104,7 @@
               data-closed-date-blocker-disabled-dates-value="<%= @closed_dates.map(&:to_s).to_json %>">
 
             <%= f.date_field :reserved_date,
+                value: @reservation.reserved_date,
                 min: @min_reservable_date.to_s,
                 max: @max_reservable_date.to_s,
                 class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300",
@@ -110,14 +113,21 @@
                   action: "change->closed-date-blocker#check"
                 } %>
 
-            <p class="mt-2 rounded bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700 hidden"
+            <p class="mt-2 rounded border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 hidden"
               data-closed-date-blocker-target="message"></p>
+
+            <% if @reservation.reserved_date.present? %>
+              <div class="mt-2 rounded-md border border-orange-200 bg-orange-50 px-3 py-2 text-sm text-orange-800">
+                <span class="font-medium">選択中の日付：</span>
+                <%= Date.parse(@reservation.reserved_date.to_s).strftime("%Y年%m月%d日") rescue @reservation.reserved_date %>
+              </div>
+            <% end %>
           </div>
 
           <!-- 時間（10:00 / 13:00） -->
           <div class="flex-1">
             <%= f.select :reserved_time,
-                options_for_select([["10:00", "10:00"], ["13:00", "13:00"]], params.dig(:reservation, :reserved_time)),
+                options_for_select([["10:00", "10:00"], ["13:00", "13:00"]], @reservation.reserved_time.presence || params.dig(:reservation, :reserved_time)),
                 { prompt: "時間を選択" },
                 class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-300" %>
           </div>

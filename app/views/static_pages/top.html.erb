@@ -16,10 +16,12 @@
   </section>
 
   <!-- 営業日 -->
-  <%= render "shared/business_calendar",
-    events: @events,
-    title: "営業日カレンダー",
-    note: "※営業時間は10:00〜16:00です" %>
+<%= render "shared/business_calendar",
+  events: @events,
+  title: "営業日カレンダー",
+  note: "※開催は1日2回（10:00 / 13:00）です",
+  min_reservable_date: @min_reservable_date,
+  max_reservable_date: @max_reservable_date %>
 
   <!-- 次にすること -->
   <section class="bg-white rounded-lg shadow-md p-6 border border-orange-100 space-y-4">
