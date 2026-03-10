@@ -10,6 +10,10 @@
         件数：
         <span class="font-bold text-gray-800"><%= @reservations.size %></span>
       </span>
+
+      <%= link_to "CSV出力",
+          admin_reservations_path(format: :csv),
+          class: "px-3 py-1 text-xs font-bold text-white bg-green-600 rounded hover:bg-green-700" %>
     </div>
 
     <div class="overflow-x-auto">
