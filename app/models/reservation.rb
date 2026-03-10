@@ -1,3 +1,5 @@
+require "csv"
+
 class Reservation < ApplicationRecord
   belongs_to :user
   belongs_to :harvest_experience
@@ -10,8 +12,29 @@ class Reservation < ApplicationRecord
   validates :reserved_at, presence: true
 
   validate :reserved_date_must_be_open
-
   validate :reserved_date_within_range
+
+  def self.to_csv(reservations)
+    bom = "\uFEFF"
+
+    csv_data = CSV.generate(headers: true) do |csv|
+      csv << ["予約ID", "名前", "電話", "体験名", "人数", "予約日時", "作成日時"]
+
+      reservations.each do |reservation|
+        csv << [
+          reservation.id,
+          reservation.user.name,
+          reservation.user.phone_number,
+          reservation.harvest_experience.title,
+          reservation.number_of_people,
+          reservation.reserved_at&.strftime("%Y-%m-%d %H:%M"),
+          reservation.created_at.strftime("%Y-%m-%d %H:%M:%S")
+        ]
+      end
+    end
+
+    bom + csv_data
+  end
 
   private
 
@@ -50,7 +73,7 @@ class Reservation < ApplicationRecord
         today + 1.day
       end
 
-    max = today + 60.days  # ここはあなたの設定に合わせる
+    max = today + 60.days
 
     if date < min || date > max
       errors.add(:reserved_at, "は予約可能な期間外です")
