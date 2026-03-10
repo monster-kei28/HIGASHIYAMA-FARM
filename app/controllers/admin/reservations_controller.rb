@@ -1,16 +1,37 @@
 class Admin::ReservationsController < Admin::BaseController
+  before_action :set_reservation, only: %i[show destroy]
+
   def index
-    @reservations = Reservation.includes(:user, :harvest_experience)
-                              .order(reserved_at: :desc)
+    base_query = reservations_query
+
+    @reservations = base_query
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        send_data Reservation.to_csv(base_query),
+                  filename: "reservations-#{Time.zone.today}.csv",
+                  type: "text/csv; charset=UTF-8"
+      end
+    end
   end
 
   def show
-    @reservation = Reservation.find(params[:id])
   end
 
   def destroy
-    reservation = Reservation.find(params[:id])
-    reservation.destroy
+    @reservation.destroy
     redirect_to admin_reservations_path, notice: "予約を削除しました"
+  end
+
+  private
+
+  def set_reservation
+    @reservation = Reservation.find(params[:id])
+  end
+
+  def reservations_query
+    Reservation.includes(:user, :harvest_experience)
+               .order(reserved_at: :desc)
   end
 end
