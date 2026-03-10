@@ -18,7 +18,7 @@ class Reservation < ApplicationRecord
     bom = "\uFEFF"
 
     csv_data = CSV.generate(headers: true) do |csv|
-      csv << ["予約ID", "名前", "電話", "体験名", "人数", "予約日時", "作成日時"]
+      csv << [ "予約ID", "名前", "電話", "体験名", "人数", "予約日時", "作成日時" ]
 
       reservations.each do |reservation|
         csv << [
