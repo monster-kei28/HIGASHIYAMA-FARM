@@ -1,0 +1,43 @@
+<div class="max-w-3xl mx-auto px-4 py-10 space-y-6">
+  <div class="bg-white rounded-lg shadow-md p-6 border border-orange-100 space-y-4">
+    <h1 class="text-xl font-bold text-green-700 text-center">収穫体験一覧</h1>
+    <p class="text-sm text-gray-600 text-center">
+      登録されている収穫体験の確認・削除ができます
+    </p>
+
+    <div class="flex items-center justify-center gap-3 pt-2">
+      <%= link_to "管理者トップへ", admin_root_path,
+          class: "inline-flex items-center justify-center rounded-md bg-gray-100 px-4 py-2 font-bold text-gray-700 shadow hover:bg-gray-200 transition" %>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-md p-6 border border-orange-100">
+    <% if @harvest_experiences.any? %>
+      <div class="space-y-3">
+        <% @harvest_experiences.each do |experience| %>
+          <div class="flex items-center justify-between rounded-md border border-gray-200 px-4 py-3">
+            <div>
+              <p class="font-medium text-gray-800"><%= experience.title %></p>
+              <p class="text-xs text-gray-500">
+                関連予約件数: <%= experience.reservations.count %>件
+              </p>
+            </div>
+
+            <% if experience.reservations.exists? %>
+              <span class="inline-flex items-center rounded-md bg-gray-100 px-3 py-2 text-sm font-bold text-gray-500">
+                予約ありのため削除不可
+              </span>
+            <% else %>
+              <%= link_to "削除",
+                  admin_harvest_experience_path(experience),
+                  data: { turbo_method: :delete, turbo_confirm: "「#{experience.title}」を削除しますか？" },
+                  class: "inline-flex items-center justify-center rounded-md bg-red-500 px-4 py-2 font-bold text-white shadow hover:bg-red-600 transition" %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-sm text-gray-600 text-center">収穫体験は登録されていません</p>
+    <% end %>
+  </div>
+</div>

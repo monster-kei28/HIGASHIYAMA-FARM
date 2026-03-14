@@ -33,5 +33,7 @@ Rails.application.routes.draw do
         post :bulk_update
       end
     end
+
+        resources :harvest_experiences, only: %i[index destroy]
   end
 end
