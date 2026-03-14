@@ -35,6 +35,5 @@ Rails.application.routes.draw do
     end
 
         resources :harvest_experiences, only: %i[index destroy]
-
   end
 end
