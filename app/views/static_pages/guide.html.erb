@@ -1,66 +1,84 @@
-<div class="max-w-2xl mx-auto px-4 py-10 space-y-10">
+<div class="max-w-4xl mx-auto px-4 py-10 space-y-10">
   <h2 class="text-center">
-    <span class="inline-block bg-orange-100 px-6 py-2 text-xl font-bold">
+    <span class="inline-block rounded bg-orange-100 px-6 py-2 text-xl font-bold text-gray-800">
       はじめての方へ（使い方ガイド）
     </span>
   </h2>
 
   <!-- イントロ -->
-  <section class="bg-white p-6 rounded-lg shadow-md border border-green-100 space-y-6">
-    <h3 class="text-xl font-bold text-green-700">
+  <section class="bg-white p-6 rounded-lg shadow-md border border-green-100 space-y-5">
+    <h3 class="text-lg font-bold text-green-700">
       HIGASHIYAMA FARMへようこそ
     </h3>
 
     <p class="text-gray-700 leading-relaxed">
-      HIGASHIYAMA FARMは<strong>さつまいもの収穫体験</strong>を
+      HIGASHIYAMA FARMは、<strong>さつまいもの収穫体験</strong>を
       ご家族やご友人と楽しんでいただける農園です。
     </p>
 
     <p class="text-gray-700 leading-relaxed">
-      土に触れ、季節を感じ、自分の手でさつまいもを掘り出すワクワク感。
-      そんな収穫の楽しさを、ここ東山の畑で体験してみませんか？
+      土に触れ、季節を感じ、自分の手でさつまいもを掘り出す楽しさを味わえます。
+      当日は受付後、スタッフの簡単な案内を行ってから収穫体験をお楽しみいただけます。
     </p>
 
     <p class="text-gray-700 leading-relaxed">
       ご予約はスマートフォンから簡単にお申し込みいただけます。
-      LINEログインなしでもご利用可能ですので、どなたでも安心してご予約ください。
+      LINEログインなしでもご利用可能ですので、はじめての方でも安心してご予約ください。
     </p>
+  </section>
 
-    <!-- CTA -->
-    <div class="flex gap-4 justify-center max-w-md mx-auto pt-4">
+  <!-- 体験情報 -->
+  <section class="bg-white p-6 rounded-lg shadow-md border border-orange-100 space-y-6">
+    <h3 class="text-lg font-bold text-green-700">体験情報</h3>
 
-      <%= link_to "収穫体験を予約する", new_reservation_path,
-          class: "flex-1 text-center rounded bg-orange-500 px-6 py-3 font-bold text-white hover:bg-orange-600 shadow-md transition" %>
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="rounded-lg bg-orange-50 p-4 border border-orange-100 space-y-2">
+        <h4 class="font-bold text-orange-700">体験内容</h4>
+        <ul class="text-gray-700 space-y-1 list-disc ml-5">
+          <li>収穫できる作物：さつまいも</li>
+          <li>所要時間：約30〜60分</li>
+          <li>料金：1株 500円</li>
+          <li class="text-sm text-gray-600">※収穫した株数分のお支払いです</li>
+        </ul>
+      </div>
 
-      <%= link_to "予約内容を確認する", search_reservations_path,
-          class: "flex-1 text-center rounded border-2 border-orange-400 bg-white px-6 py-3 font-bold text-orange-700 hover:bg-orange-50 transition" %>
+      <div class="rounded-lg bg-orange-50 p-4 border border-orange-100 space-y-2">
+        <h4 class="font-bold text-orange-700">持ち物</h4>
+        <ul class="text-gray-700 space-y-1 list-disc ml-5">
+          <li>軍手</li>
+          <li>汚れてもよい服</li>
+          <li>動きやすい靴</li>
+        </ul>
+      </div>
 
+      <div class="rounded-lg bg-orange-50 p-4 border border-orange-100 space-y-2">
+        <h4 class="font-bold text-orange-700">注意事項</h4>
+        <ul class="text-gray-700 space-y-1 list-disc ml-5">
+          <li>雨天の場合は中止となる場合があります</li>
+          <li>駐車場あり</li>
+          <li>お子さまも参加できます</li>
+        </ul>
+      </div>
     </div>
   </section>
 
   <!-- 予約の流れ -->
   <section class="bg-white p-6 rounded-lg shadow-md border border-orange-100 space-y-4">
-    <h3 class="text-lg font-bold text-green-700">予約の流れ（かんたん4ステップ）</h3>
+    <h3 class="text-lg font-bold text-green-700">予約の流れ</h3>
 
     <div class="space-y-3">
       <div class="rounded-lg bg-orange-50 p-4 border border-orange-100">
-        <div class="font-bold text-orange-700">STEP 0：LINEログイン（任意）</div>
-        <p class="text-gray-700 mt-1">
-          ※予約完了通知を受けたい方は、LINEログインが必要です。<strong>ログインしなくても予約できます</strong>。
-        </p>
-      </div>
-
-      <div class="rounded-lg bg-orange-50 p-4 border border-orange-100">
         <div class="font-bold text-orange-700">STEP 1：日付を選ぶ</div>
         <p class="text-gray-700 mt-1">
-          「ご予約はこちら」からカレンダーを見て、開催日を選びます。（営業時間は10:00〜16:00）
+          「ご予約はこちら」からカレンダーを見て、開催日を選びます。
         </p>
       </div>
 
       <div class="rounded-lg bg-orange-50 p-4 border border-orange-100">
         <div class="font-bold text-orange-700">STEP 2：必要情報を入力</div>
         <p class="text-gray-700 mt-1">
-          名前・電話番号・体験内容・人数・希望日時を入力します。
+          名前・電話番号・人数・希望日時を入力します。
+          LINEログインは任意ですが、予約完了通知を受けたい方におすすめです。
         </p>
       </div>
 
@@ -73,35 +91,6 @@
     </div>
   </section>
 
-  <!-- LINEログイン -->
-  <section class="bg-white p-6 rounded-lg shadow-md border border-orange-100 space-y-4">
-    <h3 class="text-lg font-bold text-green-700">LINEログインは必要？（任意です）</h3>
-
-    <ul class="list-disc ml-5 text-gray-700 space-y-1">
-      <li><strong>ログインしなくても予約できます</strong>（通常のフォーム入力でOK）</li>
-      <li>※予約完了通知を受けたい方は、LINEログインが必要です</li>
-    </ul>
-
-    <div class="rounded bg-gray-50 p-4 border text-gray-700">
-      <div class="font-bold mb-1">どっちがおすすめ？</div>
-      <p class="leading-relaxed">
-        まずは気軽に予約したい → <strong>ログインなし</strong><br>
-        通知がほしい → <strong>LINEログイン</strong>
-      </p>
-    </div>
-  </section>
-
-  <!-- 当日の流れ -->
-  <section class="bg-white p-6 rounded-lg shadow-md border border-orange-100 space-y-3">
-    <h3 class="text-lg font-bold text-green-700">当日の流れ</h3>
-    <ol class="list-decimal ml-5 text-gray-700 space-y-1">
-      <li>現地に到着 → 受付</li>
-      <li>スタッフから簡単な説明</li>
-      <li>収穫体験スタート</li>
-      <li>終了・解散</li>
-    </ol>
-  </section>
-
   <!-- FAQ -->
   <section class="bg-white p-6 rounded-lg shadow-md border border-orange-100 space-y-3">
     <h3 class="text-lg font-bold text-green-700">よくある質問</h3>
@@ -110,39 +99,38 @@
       <details class="rounded border p-4">
         <summary class="font-bold cursor-pointer">予約の確認はどうやってしますか？</summary>
         <p class="text-gray-700 mt-2">
-          「予約の確認はこちら」から電話番号を入力して確認できます。
+          「予約内容を確認する」から電話番号を入力して確認できます。
         </p>
       </details>
 
       <details class="rounded border p-4">
         <summary class="font-bold cursor-pointer">キャンセルはできますか？</summary>
         <p class="text-gray-700 mt-2">
-          予約詳細ページからキャンセルできます（またはお問い合わせからご連絡ください）。
+          予約詳細ページからキャンセルできます。必要に応じてお問い合わせからのご連絡も可能です。
         </p>
       </details>
 
       <details class="rounded border p-4">
-        <summary class="font-bold cursor-pointer">入力する名前は本名ですか？</summary>
+        <summary class="font-bold cursor-pointer">LINEログインは必須ですか？</summary>
         <p class="text-gray-700 mt-2">
-          受付時の確認に使うので、<strong>本名</strong>での入力がおすすめです。
+          必須ではありません。ログインなしでも予約できます。
+          予約完了通知を受け取りたい場合はLINEログインをご利用ください。
         </p>
       </details>
     </div>
   </section>
 
-  <!-- 最後のCTA -->
-  <section class="bg-orange-50 p-6 rounded-lg shadow-md border border-orange-200 space-y-4">
+  <!-- CTA -->
+  <section class="bg-orange-50 p-6 rounded-lg shadow-md border border-orange-200 space-y-4 text-center">
     <h3 class="text-lg font-bold text-orange-800">準備OK！</h3>
     <p class="text-gray-700">さっそく予約に進みましょう。</p>
 
-    <div class="flex gap-4 justify-center max-w-md mx-auto">
-
+    <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
       <%= link_to "ご予約はこちら", new_reservation_path,
           class: "flex-1 text-center rounded bg-orange-500 px-6 py-3 font-bold text-white hover:bg-orange-600 shadow-md" %>
 
       <%= link_to "予約の確認はこちら", search_reservations_path,
           class: "flex-1 text-center rounded border-2 border-orange-400 bg-white px-6 py-3 font-bold text-orange-700 hover:bg-orange-50" %>
-
     </div>
   </section>
 </div>
