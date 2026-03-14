@@ -7,16 +7,11 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-harvest_experiences = [
-  { title: "さつまいも掘り" },
-  { title: "みかん狩り" },
-  { title: "いちご狩り" }
-]
 
-harvest_experiences.each do |attrs|
-  HarvestExperience.find_or_create_by!(title: attrs[:title])
-end
+# 収穫体験（さつまいものみ）
+HarvestExperience.find_or_create_by!(title: "さつまいも掘り")
 
+# 初期管理者作成
 first_admin_uid = ENV["FIRST_ADMIN_UID"]
 
 if first_admin_uid.present?
