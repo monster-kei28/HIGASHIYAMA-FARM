@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_02_27_143634) do
+ActiveRecord::Schema[7.2].define(version: 2026_03_20_130141) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -36,6 +36,19 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_27_143634) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "page_images", force: :cascade do |t|
+    t.integer "page_type", null: false
+    t.integer "slot", null: false
+    t.string "image", null: false
+    t.integer "position", default: 1, null: false
+    t.boolean "published", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["page_type", "slot", "published", "position"], name: "index_page_images_on_display_fields"
+    t.index ["page_type"], name: "index_page_images_on_page_type"
+    t.index ["slot"], name: "index_page_images_on_slot"
   end
 
   create_table "reservations", force: :cascade do |t|
