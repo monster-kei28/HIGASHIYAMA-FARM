@@ -1,4 +1,6 @@
 class PageImage < ApplicationRecord
+  mount_uploader :image, PageImageUploader
+
   enum :page_type, {
     top: 0,
     guide: 1
