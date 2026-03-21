@@ -1,0 +1,57 @@
+<div class="max-w-xl mx-auto px-4 py-10">
+  <div class="bg-white rounded-lg shadow-md border border-orange-100 p-6 space-y-6">
+    <div class="text-center space-y-2">
+      <h1 class="text-2xl font-bold text-green-700">トップ画像設定</h1>
+      <p class="text-sm text-gray-600">
+        トップページに表示する画像を変更できます。
+      </p>
+    </div>
+
+    <% if @page_image.image.present? %>
+      <div class="space-y-2">
+        <p class="text-sm font-bold text-gray-700">現在の画像</p>
+        <%= image_tag @page_image.image.url,
+            class: "w-full rounded-lg border border-orange-100 shadow-sm" %>
+      </div>
+    <% end %>
+
+    <%= form_with model: [:admin, @page_image],
+        url: admin_top_page_image_path,
+        local: true,
+        multipart: true,
+        class: "space-y-4" do |f| %>
+
+      <div class="space-y-2">
+        <%= f.label :image, "トップページ画像", class: "block text-sm font-bold text-gray-700" %>
+
+        <label class="block cursor-pointer rounded-lg border-2 border-dashed border-orange-300 bg-orange-50 px-4 py-6 text-center hover:bg-orange-100 transition">
+          <div class="space-y-2">
+            <p class="text-sm font-bold text-orange-700">画像を選択</p>
+            <p class="text-xs text-gray-600">
+              PNG / JPG / WebP をアップロードできます
+            </p>
+            <p class="text-xs text-gray-500">
+              推奨サイズ: 1600 × 900
+            </p>
+            <p id="selected-file-name" class="text-xs font-medium text-green-700"></p>
+          </div>
+
+          <%= f.file_field :image,
+              accept: "image/png,image/jpeg,image/webp",
+              class: "hidden",
+              onchange: "document.getElementById('selected-file-name').textContent = this.files[0]?.name || ''" %>
+        </label>
+      </div>
+
+      <div>
+        <%= f.submit "画像を更新する",
+            class: "w-full inline-flex items-center justify-center rounded-md bg-green-600 px-4 py-3 font-bold text-white shadow hover:bg-green-700 transition" %>
+      </div>
+    <% end %>
+
+    <div class="text-center">
+      <%= link_to "管理者ページへ戻る", admin_root_path,
+          class: "text-sm text-gray-600 hover:text-gray-800 underline" %>
+    </div>
+  </div>
+</div>
