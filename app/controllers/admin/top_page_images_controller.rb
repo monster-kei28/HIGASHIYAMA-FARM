@@ -7,7 +7,7 @@ class Admin::TopPageImagesController < Admin::BaseController
     if @page_image.update(page_image_params)
       redirect_to edit_admin_top_page_image_path, notice: "トップページ画像を更新しました"
     else
-      flash.now[:alert] = "トップページ画像の更新に失敗しました"
+      flash.now[:alert] = @page_image.errors.full_messages.join(", ")
       render :edit, status: :unprocessable_entity
     end
   end
