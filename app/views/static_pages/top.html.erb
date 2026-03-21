@@ -1,7 +1,14 @@
 <section class="space-y-4 pt-6 max-w-5xl mx-auto px-4">
   <div class="overflow-hidden rounded-xl shadow-md">
-    <%= image_tag "HIGASHIYAMA_FARM.png",
-        class: "w-full h-[240px] sm:h-[340px] object-cover" %>
+    <% if @top_hero_images.any? %>
+      <% @top_hero_images.each do |page_image| %>
+        <%= image_tag page_image.image.url,
+            class: "w-full h-[240px] sm:h-[340px] object-cover" %>
+      <% end %>
+    <% else %>
+      <%= image_tag "HIGASHIYAMA_FARM.png",
+          class: "w-full h-[240px] sm:h-[340px] object-cover" %>
+    <% end %>
   </div>
 
   <div class="text-center px-4">

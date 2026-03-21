@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_action :store_location
   helper_method :current_user, :logged_in?
+  before_action :set_top_hero_images
 
   private
 
@@ -19,5 +20,9 @@ class ApplicationController < ActionController::Base
 
   def logged_in?
     current_user.present?
+  end
+
+  def set_top_hero_images
+    @top_hero_images = PageImage.for_display(:top, :hero)
   end
 end
