@@ -34,6 +34,8 @@ Rails.application.routes.draw do
       end
     end
 
-        resources :harvest_experiences, only: %i[index destroy]
+    resources :harvest_experiences, only: %i[index destroy]
+
+    resource :top_page_image, only: %i[edit update]
   end
 end

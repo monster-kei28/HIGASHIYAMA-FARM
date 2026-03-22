@@ -41,6 +41,9 @@ gem "rubocop"
 gem "omniauth"
 gem "omniauth-line"
 gem "omniauth-rails_csrf_protection"
+gem "carrierwave", "~> 3.1"
+gem "mini_magick", "~> 5.3"
+gem "carrierwave-aws"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
