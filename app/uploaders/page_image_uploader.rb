@@ -7,7 +7,7 @@ class PageImageUploader < CarrierWave::Uploader::Base
     storage :file
   end
 
-  process resize_to_limit: [1600, 900]
+  process resize_to_limit: [ 1600, 900 ]
   process :convert_to_webp
 
   def extension_allowlist
@@ -15,7 +15,7 @@ class PageImageUploader < CarrierWave::Uploader::Base
   end
 
   def content_type_allowlist
-    [/image\//]
+    [ /image\// ]
   end
 
   def store_dir
