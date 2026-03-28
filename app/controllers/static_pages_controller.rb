@@ -1,6 +1,7 @@
 class StaticPagesController < ApplicationController
   def top
     @events = CalendarEvent.all
+    @closed_dates = CalendarEvent.where(kind: :closed).pluck(:event_date)
 
     today = Date.current
     now = Time.zone.now
