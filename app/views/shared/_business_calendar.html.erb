@@ -4,7 +4,7 @@
   <% end %>
 
   <%= month_calendar events: events do |date, day_events| %>
-    <% closed = CalendarEvent.closed_on?(date) %>
+    <% closed = closed_dates.include?(date) %>
     <% reservable = !closed && date >= min_reservable_date && date <= max_reservable_date %>
 
     <div class="flex flex-col h-full gap-1">
@@ -23,6 +23,7 @@
           <%= date.day %>
         </span>
       <% end %>
+
       <% day_events.each do |event| %>
         <span class="mt-1 rounded px-1 text-xs <%= event.closed? ? 'bg-gray-200 text-gray-600' : 'bg-orange-200 text-gray-800' %>">
           <%= event.title %>
