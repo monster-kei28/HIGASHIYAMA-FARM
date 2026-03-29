@@ -14,31 +14,35 @@ class ReservationsController < ApplicationController
     @harvest_experiences = HarvestExperience.all
     @events = CalendarEvent.all
 
-    range = Date.current..(Date.current + 60.days)
-    @closed_dates = CalendarEvent.closed_dates_between(range)
-
     today = Date.current
     now = Time.zone.now
     deadline = Time.zone.local(today.year, today.month, today.day, 17, 0, 0)
 
     @min_reservable_date = now >= deadline ? today + 2.days : today + 1.day
     @max_reservable_date = today + 60.days
+
+    @calendar_closed_dates = CalendarEvent.where(kind: :closed).pluck(:event_date)
+
+    range = @min_reservable_date..@max_reservable_date
+    @blocked_closed_dates = CalendarEvent.closed_dates_between(range)
   end
 
   def create
     @harvest_experiences = HarvestExperience.all
     @events = CalendarEvent.all
 
-    # ✅ 追加：エラーで render :new したときも必要
-    range = Date.current..(Date.current + 60.days)
-    @closed_dates = CalendarEvent.closed_dates_between(range)
-
     today = Date.current
     now = Time.zone.now
     deadline = Time.zone.local(today.year, today.month, today.day, 17, 0, 0)
 
     @min_reservable_date = now >= deadline ? today + 2.days : today + 1.day
     @max_reservable_date = today + 60.days
+
+    @calendar_closed_dates = CalendarEvent.where(kind: :closed).pluck(:event_date)
+
+    range = @min_reservable_date..@max_reservable_date
+    @blocked_closed_dates = CalendarEvent.closed_dates_between(range)
+
 
     @user =
       if logged_in?
