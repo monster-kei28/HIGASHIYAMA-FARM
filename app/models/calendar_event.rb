@@ -24,7 +24,7 @@ class CalendarEvent < ApplicationRecord
 
     where(event_date: from..to, kind: :closed)
       .pluck(:event_date)
-      .map { |dt| dt.to_date.to_s }   # ✅ "YYYY-MM-DD" に揃える
+      .map(&:to_date)   # ✅ "YYYY-MM-DD" に揃える
       .uniq
   end
 end
