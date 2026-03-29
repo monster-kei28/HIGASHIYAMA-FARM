@@ -29,7 +29,7 @@
   <!-- 営業日 -->
   <%= render "shared/business_calendar",
     events: @events,
-    closed_dates: @closed_dates,
+    closed_dates: @calendar_closed_dates,
     title: "営業日カレンダー",
     note: "※開催は1日2回（10:00 / 13:00）です",
     min_reservable_date: @min_reservable_date,
