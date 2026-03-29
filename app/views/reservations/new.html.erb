@@ -20,8 +20,9 @@
   <!-- カレンダー -->
   <%= render "shared/business_calendar",
     events: @events,
+    closed_dates: @calendar_closed_dates,
     title: "営業日カレンダー",
-    note: "※開催は1日2回（10:00 / 13:00）ですです",
+    note: "※開催は1日2回（10:00 / 13:00）です",
     min_reservable_date: @min_reservable_date,
     max_reservable_date: @max_reservable_date %>
 
@@ -101,7 +102,7 @@
           <!-- 日付 -->
           <div class="flex-1"
               data-controller="closed-date-blocker"
-              data-closed-date-blocker-disabled-dates-value="<%= @closed_dates.map(&:to_s).to_json %>">
+              data-closed-date-blocker-disabled-dates-value="<%= @blocked_closed_dates.map(&:to_s).to_json %>">
 
             <%= f.date_field :reserved_date,
                 value: @reservation.reserved_date,
