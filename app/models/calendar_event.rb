@@ -12,12 +12,17 @@ class CalendarEvent < ApplicationRecord
     open? ? "開催" : "休み"
   end
 
-  # ✅ 追加：休み判定
+  # バリデーション用：指定日が休業日か判定する
   def self.closed_on?(date)
-    where(event_date: date, kind: :closed).exists?
+    where(event_date: date.to_date, kind: :closed).exists?
   end
 
-  # ✅ 追加：休み日一覧（配列で返す）
+  # カレンダー表示用：休業日一覧を返す
+  def self.closed_dates
+    where(kind: :closed).pluck(:event_date)
+  end
+
+  # フォーム判定用：指定範囲内の休業日一覧を返す
   def self.closed_dates_between(range)
     from = range.begin.to_date.beginning_of_day
     to   = range.end.to_date.end_of_day
