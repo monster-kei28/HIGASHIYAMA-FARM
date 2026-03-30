@@ -13,8 +13,8 @@ class CalendarEvent < ApplicationRecord
   end
 
   # ✅ 追加：休み判定
-  def self.closed_on?(date)
-    where(event_date: date, kind: :closed).exists?
+  def self.closed_dates
+    where(kind: :closed).pluck(:event_date)
   end
 
   # ✅ 追加：休み日一覧（配列で返す）
